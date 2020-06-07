@@ -1,20 +1,29 @@
-#include <vector>
+struct state
+{
+        char **board;
+};
+
 class gobang
 {
 private:
-    struct state
-    {
-        char **board;
-    };
     state currentState;
     int boardSize;
-    void HumanTurn(char);
-    bool gameEnds();
-
+    char AIPiece;
+    char HumanPiece;
+    int depth;
+    void HumanTurn();
+    int horizantal(state*);
+    int vertical(state*);
+    int diagonal(state*);
+    int countPattern(std::string, std::string);
+    
 public:
-    gobang(int boardSize = 11);
-    double evalFunc(state);
-    state optimalMove(state);
-    void startGame(char);
+    gobang(int boardSize, char AIPiece);
+    bool isTie(state*);
+    int evalFunc(state*, int, bool);
+    int minmax(state*, int, bool);
+    std::string AIOptimalMove(state*);
+    void startGame();
+    bool gameEnds(state*);
     void printBoard();
 };
