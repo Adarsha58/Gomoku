@@ -225,8 +225,7 @@ string gobang::AIOptimalMove(state* s){
     int MaxValue = -100000000;
     string s1 = "";
     char col;
-    char row;
-    int row1 = 0, col1 = 0;
+    int row;
     for (int i = 0; i < boardSize; i++){
         for (int j = 0; j < boardSize; j++){
             if(s->board[i][j] == 'X'){
@@ -234,7 +233,7 @@ string gobang::AIOptimalMove(state* s){
                 int tmp = minmax(s, 1,false);
                 if(tmp >= MaxValue){
                     col = 'a' + j;
-                    row = '0' + i;
+                    row = i;
                     MaxValue = tmp;
                 }
                 s->board[i][j] = 'X';
@@ -242,7 +241,7 @@ string gobang::AIOptimalMove(state* s){
         }
     }
     s1 += col;
-    s1 += row;
+    s1 += to_string(row);
     return s1;
 }
 
