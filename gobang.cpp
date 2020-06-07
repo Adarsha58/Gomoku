@@ -307,7 +307,7 @@ void gobang::startGame()
         int col = move[0] - 'a';
         int row = move[1] - '0';
         currentState.board[row][col] = AIPiece;
-        cout<< "Moved played: " << move << endl;
+        cout<< "Move played: " << move << endl;
         printBoard();
     }
 }
