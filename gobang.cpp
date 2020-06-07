@@ -232,7 +232,6 @@ string gobang::AIOptimalMove(state* s){
             if(s->board[i][j] == 'X'){
                 s->board[i][j] = AIPiece;
                 int tmp = minmax(s, 1,false);
-                //cout<< i << " " << j << " Evaluation values: "<< tmp<< endl;
                 if(tmp >= MaxValue){
                     col = 'a' + j;
                     row = '0' + i;
