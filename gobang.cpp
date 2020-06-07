@@ -123,13 +123,14 @@ int gobang::horizantal(state* s){
         score += 100000 * (countPattern("XbbbbX", line)); //the straight four
         score += 50000 * (countPattern("bbbbX", line) + countPattern("bbbXb", line) + countPattern("bbXbb", line) + countPattern("bXbbb", line) + countPattern("Xbbbb", line)); //the four
         score += 1000* (countPattern("XbbbX", line)); //the three
-        score += 5000 * countPattern("XbXbbX", line); //the broken three  
-        
+        score += 5000 * (countPattern("XbXbbX", line)); //the broken three  
+        score += 200 * countPattern("XbbX", line); //the two
 
         score2 += 100000 * (countPattern("XwwwwX", line)); //the straight four
         score2 += 50000 * (countPattern("wwwwX", line) + countPattern("wwwXw", line) + countPattern("wwXww", line) + countPattern("wXwww", line) + countPattern("Xwwww", line)); //the four
         score2 += 1000 * (countPattern("XwwwX", line)); //the three
-        score2 += 5000 * countPattern("XwXwwX", line); //the wroken three
+        score2 += 5000 * (countPattern("XwXwwX", line)); //the wroken three
+        score2 +=  200 * countPattern("XwwX", line); //the two
     }
     if(AIPiece == 'b') return score - score2;
     return score2 - score;
@@ -147,11 +148,13 @@ int gobang::vertical(state* s){
         score += 50000 * (countPattern("bbbbX", line) + countPattern("bbbXb", line) + countPattern("bbXbb", line) + countPattern("bXbbb", line) + countPattern("Xbbbb", line)); //the four
         score += 1000 * (countPattern("XbbbX", line)); //the three
         score += 5000 * countPattern("XbXbbX", line); //the broken three  
+        score +=  200 * countPattern("XbbX", line); //the two
 
         score2 += 100000 * (countPattern("XwwwwX", line)); //the straight four
         score2 += 50000 * (countPattern("wwwwX", line) + countPattern("wwwXw", line) + countPattern("wwXww", line) + countPattern("wXwww", line) + countPattern("Xwwww", line)); //the four
         score2 += 1000 * (countPattern("XwwwX", line)); //the three
         score2 += 5000 * countPattern("XwXwwX", line); //the wroken three  
+        score2 +=  200 * countPattern("XwwX", line); //the two
     }
     if(AIPiece == 'b') return score - score2;
     return score2 - score;
@@ -191,6 +194,7 @@ int gobang::diagonal(state* s){
                         + countPattern("XbbbX", line3) + countPattern("XbbbX", line4)); //the three
         score += 5000 * (countPattern("XbXbbX", line) + countPattern("XbXbbX", line2)
                          +countPattern("XbXbbX", line3) + countPattern("XbXbbX", line4)); //the broken three  
+        score +=  200 * (countPattern("XbbX", line) + countPattern("XbbX", line2) + countPattern("XbbX", line3) + countPattern("XbbX", line4) ); //the two
 
         score2 += 100000 * (countPattern("XwwwwX", line) + countPattern("XwwwwX", line2)
                             +countPattern("XwwwwX", line3) + countPattern("XwwwwX", line4)); //the straight four
@@ -202,6 +206,7 @@ int gobang::diagonal(state* s){
                         + countPattern("XwwwX", line3) + countPattern("XwwwX", line4)); //the three
         score2 += 5000 * (countPattern("XwXwwX", line) + countPattern("XwXwwX", line2)
                          +countPattern("XwXwwX", line3) + countPattern("XwXwwX", line4)); //the wroken three  
+        score2 +=  200 * (countPattern("XwwX", line) + countPattern("XwwX", line2) + countPattern("XwwX", line3) + countPattern("XwwX", line4) );
 
 
     }
@@ -289,10 +294,10 @@ int gobang::minmax(state* s, int depth, bool isAIturn){
 void gobang::startGame()
 {
     if(AIPiece == 'b'){
-        cout << "hello" <<endl;
         string move = AIOptimalMove(&currentState);
         int col = move[0] - 'a';
-        int row = move[1] - '0';
+        int row = stoi(move.substr(1));
+       // cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
         printBoard();
@@ -303,7 +308,8 @@ void gobang::startGame()
         printBoard();
         string move = AIOptimalMove(&currentState);
         int col = move[0] - 'a';
-        int row = move[1] - '0';
+        int row = stoi(move.substr(1));
+        //cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
         printBoard();
