@@ -12,9 +12,9 @@ private:
     char HumanPiece;
     int depth;
     void HumanTurn();
-    int horizantal(state*);
-    int vertical(state*);
-    int diagonal(state*);
+    int horizantal(state*,bool);
+    int vertical(state*, bool);
+    int diagonal(state*, bool);
     int countPattern(std::string, std::string);
     
 public:

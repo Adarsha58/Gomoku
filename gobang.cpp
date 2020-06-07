@@ -115,7 +115,7 @@ int gobang::countPattern(string pattern, string line){
     return count;
 }
 
-int gobang::horizantal(state* s){
+int gobang::horizantal(state* s, bool isAITurn){
     int score = 1;
     int score2 = 1;
     for(int i = 0; i < boardSize; i++){
@@ -132,11 +132,13 @@ int gobang::horizantal(state* s){
         score2 += 5000 * (countPattern("XwXwwX", line)); //the wroken three
         score2 +=  200 * countPattern("XwwX", line); //the two
     }
-    if(AIPiece == 'b') return score - score2;
-    return score2 - score;
+    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
+    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
+    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
+    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
 }
 
-int gobang::vertical(state* s){
+int gobang::vertical(state* s, bool isAITurn){
     int score = 1;
     int score2 = 1;
     for(int i = 0; i < boardSize; i++){
@@ -157,10 +159,13 @@ int gobang::vertical(state* s){
         score2 +=  200 * countPattern("XwwX", line); //the two
     }
     if(AIPiece == 'b') return score - score2;
-    return score2 - score;
+    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
+    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
+    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
+    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
 }
 
-int gobang::diagonal(state* s){
+int gobang::diagonal(state* s, bool isAITurn){
     int score = 1;
     int score2 = 1;
     //right diag
@@ -210,8 +215,10 @@ int gobang::diagonal(state* s){
 
 
     }
-    if(AIPiece == 'b') return score - score2;
-    return score2 - score;
+    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
+    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
+    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
+    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
 }
 
 int gobang::evalFunc(state* s, int depth, bool isAIturn){
@@ -220,7 +227,7 @@ int gobang::evalFunc(state* s, int depth, bool isAIturn){
     if(gameEnds(s)){
         return 100000000;
     }
-    score = diagonal(s) + vertical(s) + horizantal(s);
+    score = diagonal(s, isAIturn) + vertical(s, isAIturn) + horizantal(s, isAIturn);
     score = score - depth;
     if(isAIturn) return score;
     return score * -1;
