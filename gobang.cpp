@@ -73,7 +73,7 @@ gobang::gobang(int boardSize, char AIPiece)
     //initilazies the boardSize and currentBoard
     this->boardSize = boardSize;
     this->AIPiece = AIPiece;
-    depth = 2;
+    depth = 3;
     this->HumanPiece = ('b' == AIPiece) ? 'w':'b';
     currentState.board = new char *[boardSize];
     for (int i = 0; i < boardSize; ++i)
@@ -135,10 +135,11 @@ int gobang::horizantal(state* s, bool isAITurn){
         score2 += 2000 * countPattern("XwwX", line); //the two
         score2 += 1000 * countPattern("XwX", line); //the one
     }
-    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
-    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
-    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
-    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
+    if(AIPiece == 'b'&& isAITurn) return score;
+    if(AIPiece == 'w' && isAITurn) return score2; 
+    if(HumanPiece == 'b'&& !isAITurn) return score;
+    if(HumanPiece == 'w' && !isAITurn) return score2; 
+
 /*
     if(AIPiece == 'b') return score - score2;
     return score2 - score; 
@@ -168,10 +169,10 @@ int gobang::vertical(state* s, bool isAITurn){
         score2 += 1000 * countPattern("XwX", line); //the one
 
     }
-    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
-    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
-    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
-    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
+    if(AIPiece == 'b'&& isAITurn) return score;
+    if(AIPiece == 'w' && isAITurn) return score2; 
+    if(HumanPiece == 'b'&& !isAITurn) return score;
+    if(HumanPiece == 'w' && !isAITurn) return score2; 
 }
 
 int gobang::diagonal(state* s, bool isAITurn){
@@ -235,10 +236,10 @@ int gobang::diagonal(state* s, bool isAITurn){
                           countPattern("XwX", line4));
 
     }
-    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
-    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
-    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
-    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
+    if(AIPiece == 'b'&& isAITurn) return score;
+    if(AIPiece == 'w' && isAITurn) return score2; 
+    if(HumanPiece == 'b'&& !isAITurn) return score;
+    if(HumanPiece == 'w' && !isAITurn) return score2; 
 }
 
 int gobang::evalFunc(state* s, int depth, bool isAIturn){
@@ -263,7 +264,7 @@ string gobang::AIOptimalMove(state* s){
             if(s->board[i][j] == 'X' && hasAdjacentPiece(i, j)){
                 s->board[i][j] = AIPiece;
                 int tmp = minmax(s, 1,false, MaxValue, -MaxValue);
-              //  cout << i << " "<< j << " :Evaluation: " << tmp << endl;
+               cout << i << " "<< j << " :Evaluation: " << tmp << endl;
                 if(tmp >= MaxValue){
                     col = 'a' + j;
                     row = i+1;
