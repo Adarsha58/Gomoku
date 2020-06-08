@@ -326,11 +326,10 @@ int gobang::minmax(state* s, int depth, bool isAIturn, int alpha, int beta){
 void gobang::startGame()
 {
     if(AIPiece == 'b'){
-        string move = AIOptimalMove(&currentState);
+        string move = "e5";
         int col = move[0] - 'a';
         int row = stoi(move.substr(1));
         row--;
-       // cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
         printBoard();

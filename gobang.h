@@ -17,12 +17,30 @@ private:
     int diagonal(state*, bool);
     int countPattern(std::string, std::string);
     bool hasAdjacentPiece(int row, int col){
-        if(col+ 1 < boardSize && currentState.board[row][col+1] != 'X') return true;
-        if(row + 1 < boardSize && currentState.board[row+1][col] != 'X') return true;
-        if(col- 1 >=0 && currentState.board[row][col-1] != 'X') return true;
-        if(row -1 >=0 && currentState.board[row-1][col] != 'X') return true;
-        if(col- 1 >=0 && row - 1 >=0 && currentState.board[row-1][col-1] != 'X') return true;
-        if(col+ 1 < boardSize && row+1 < boardSize && currentState.board[row+1][col+1] != 'X') return true;
+        if (col + 1 < boardSize && currentState.board[row][col + 1] != 'X')
+            return true;
+        if (row + 1 < boardSize && currentState.board[row + 1][col] != 'X')
+            return true;
+        if (col - 1 >= 0 && currentState.board[row][col - 1] != 'X')
+            return true;
+        if (row - 1 >= 0 && currentState.board[row - 1][col] != 'X')
+            return true;
+        if (col - 1 >= 0 && row - 1 >= 0 && currentState.board[row - 1][col - 1] != 'X')
+            return true;
+        if (col + 1 < boardSize && row + 1 < boardSize && currentState.board[row + 1][col + 1] != 'X')
+            return true;
+        if (col + 2 < boardSize && currentState.board[row][col + 2] != 'X')
+            return true;
+        if (row + 2 < boardSize && currentState.board[row + 2][col] != 'X')
+            return true;
+        if (col - 2 >= 0 && currentState.board[row][col - 2] != 'X')
+            return true;
+        if (row - 2 >= 0 && currentState.board[row - 2][col] != 'X')
+            return true;
+        if (col - 2 >= 0 && row - 2 >= 0 && currentState.board[row - 2][col - 2] != 'X')
+            return true;
+        if (col + 2 < boardSize && row + 2 < boardSize && currentState.board[row + 2][col + 2] != 'X')
+            return true;
         return false;
     };
     
