@@ -93,8 +93,7 @@ void gobang::HumanTurn()
     int col = move[0] - 'a';
     int row = stoi(move.substr(1));
     row--;
-
-    if (row >=boardSize || col >= boardSize || currentState.board[row][col] != 'X')
+    if (row >=boardSize || col >= boardSize || row <0 || currentState.board[row][col] != 'X' )
     {
         cout << "Invalid Move"<<endl;
         HumanTurn();
@@ -314,15 +313,12 @@ void gobang::startGame()
 
     while(true){
         HumanTurn();
-      //  printBoard();
         string move = AIOptimalMove(&currentState);
         int col = move[0] - 'a';
         int row = stoi(move.substr(1));
         row--;
-        //cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
-      //  printBoard();
     }
 }
 
