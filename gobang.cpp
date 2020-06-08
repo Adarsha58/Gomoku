@@ -261,7 +261,7 @@ string gobang::AIOptimalMove(state* s){
     int row;
     for (int i = 0; i < boardSize; i++){
         for (int j = 0; j < boardSize; j++){
-            if(s->board[i][j] == 'X' && hasAdjacentPiece(i, j)){
+            if(s->board[i][j] == 'X'){
                 s->board[i][j] = AIPiece;
                 int tmp = minmax(s, 1,false, MaxValue, -MaxValue);
                cout << i << " "<< j << " :Evaluation: " << tmp << endl;
@@ -294,7 +294,7 @@ int gobang::minmax(state* s, int depth, bool isAIturn, int alpha, int beta){
         int MaxValue = -100000000;
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
-                if(s->board[i][j] == 'X' && hasAdjacentPiece(i, j)){
+                if(s->board[i][j] == 'X'){
                     s->board[i][j] = AIPiece;
                     MaxValue = max(MaxValue, minmax(s, depth+1, !isAIturn, alpha, beta));
                     s->board[i][j] = 'X';
@@ -308,7 +308,7 @@ int gobang::minmax(state* s, int depth, bool isAIturn, int alpha, int beta){
         int MaxValue = 100000000;
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
-                if(s->board[i][j] == 'X' && hasAdjacentPiece(i, j)){
+                if(s->board[i][j] == 'X'){
                     s->board[i][j] = HumanPiece;
                     MaxValue = min(MaxValue, minmax(s,depth +1, !isAIturn, alpha , beta));
                     beta = min(beta, MaxValue);
