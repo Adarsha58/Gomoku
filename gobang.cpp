@@ -309,19 +309,20 @@ void gobang::startGame()
        // cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
-        printBoard();
+      //  printBoard();
     }
 
     while(true){
         HumanTurn();
-        printBoard();
+      //  printBoard();
         string move = AIOptimalMove(&currentState);
         int col = move[0] - 'a';
         int row = stoi(move.substr(1));
+        row--;
         //cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
-        printBoard();
+      //  printBoard();
     }
 }
 
