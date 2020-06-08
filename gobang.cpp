@@ -91,7 +91,8 @@ void gobang::HumanTurn()
     string move;
     cin >> move;
     int col = move[0] - 'a';
-    int row = move[1] - '0';
+    int row = stoi(move.substr(1));
+    row--;
 
     if (row >=boardSize || col >= boardSize || currentState.board[row][col] != 'X')
     {
@@ -246,7 +247,7 @@ string gobang::AIOptimalMove(state* s){
                 int tmp = minmax(s, 1,false);
                 if(tmp >= MaxValue){
                     col = 'a' + j;
-                    row = i;
+                    row = i+1;
                     MaxValue = tmp;
                 }
                 s->board[i][j] = 'X';
