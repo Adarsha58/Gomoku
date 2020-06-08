@@ -101,6 +101,7 @@ void gobang::HumanTurn()
     else
     {
         currentState.board[row][col] = HumanPiece;
+        cout<< "Move played: " << move<< endl;
         return;
     }
 }
