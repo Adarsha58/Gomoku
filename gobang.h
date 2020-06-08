@@ -22,7 +22,7 @@ public:
     gobang(int boardSize, char AIPiece);
     bool isTie(state*);
     int evalFunc(state*, int, bool);
-    int minmax(state*, int, bool, int, int);
+    int minmax(state*, int, bool);
     std::string AIOptimalMove(state*);
     void startGame();
     bool gameEnds(state*);
