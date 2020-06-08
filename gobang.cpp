@@ -135,14 +135,14 @@ int gobang::horizantal(state* s, bool isAITurn){
         score2 += 2000 * countPattern("XwwX", line); //the two
         score2 += 1000 * countPattern("XwX", line); //the one
     }
-    /*
     if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
     if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
     if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
     if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
-    */
+/*
     if(AIPiece == 'b') return score - score2;
     return score2 - score; 
+*/
 }
 
 int gobang::vertical(state* s, bool isAITurn){
@@ -168,8 +168,10 @@ int gobang::vertical(state* s, bool isAITurn){
         score2 += 1000 * countPattern("XwX", line); //the one
 
     }
-    if(AIPiece == 'b') return score - score2;
-    return score2 - score; 
+    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
+    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
+    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
+    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
 }
 
 int gobang::diagonal(state* s, bool isAITurn){
@@ -233,8 +235,10 @@ int gobang::diagonal(state* s, bool isAITurn){
                           countPattern("XwX", line4));
 
     }
-    if(AIPiece == 'b') return score - score2;
-    return score2 - score; 
+    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
+    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
+    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
+    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
 }
 
 int gobang::evalFunc(state* s, int depth, bool isAIturn){
