@@ -123,22 +123,22 @@ double gobang::horizantal(state* s, bool isMaximizingPlayer){
         string line = s->board[i];
         if (AIPiece == 'w' && isMaximizingPlayer || AIPiece == 'b' && !isMaximizingPlayer)
         {
-           // cout<< "black score"<< endl;
-            score += 1000000 * (countPattern("bbbbb", line));
-            score += 500000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
-            score += 50000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
-            score += 5000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
-            score += 5000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
+            //cout<< "black score"<< endl;
+            score += 1000000000 * (countPattern("bbbbb", line));
+            score += 500000000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
+            score += 5000000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
+            score += 50000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
+            score += 50000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
             score += 500 * (countPattern("XXbbXX", line) + countPattern("bbXXX", line) +  countPattern("XXXbb", line)); // two in a row  
             score += 100 * (countPattern("XXbXX", line)  + countPattern("bXXXX", line) + countPattern("XXXXb", line)); //ones                                                                                                                  //the two
         }
 
         if(AIPiece == 'b' && isMaximizingPlayer || AIPiece == 'w' && !isMaximizingPlayer){
-           // cout<< "White score"<< endl;
-            score += 1000000 * (countPattern("wwwww", line)); //win
-            score += 500000 * (countPattern("XwwwwX", line)); //the straight four
-            score += 50000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
-            score += 5000 * (countPattern("XwwwX", line)); //the three in a row
+           //cout<< "White score"<< endl;
+            score += 1000000000 * (countPattern("wwwww", line)); //win
+            score += 500000000 * (countPattern("XwwwwX", line)); //the straight four
+            score += 5000000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
+            score += 50000 * (countPattern("XwwwX", line)); //the three in a row
             score += 5000 * (countPattern("XwXwwX", line) + countPattern("XwwXwX", line)) ; //the broken three  
             score += 500 * (countPattern("XXwwXX", line) + countPattern("wwXXX", line) +  countPattern("XXXww", line)); // two in a row  
             score += 100 * (countPattern("XXwXX", line)  + countPattern("wXXXX", line) + countPattern("XXXXw", line)); //ones   
@@ -156,22 +156,22 @@ double gobang::vertical(state* s, bool isMaximizingPlayer){
         }
         if (AIPiece == 'w' && isMaximizingPlayer || AIPiece == 'b' && !isMaximizingPlayer)
         {
-           // cout<< "black score"<< endl;
-            score += 1000000 * (countPattern("bbbbb", line));
-            score += 500000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
-            score += 50000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
-            score += 5000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
-            score += 5000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
+            //cout<< "black score"<< endl;
+            score += 1000000000 * (countPattern("bbbbb", line));
+            score += 500000000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
+            score += 5000000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
+            score += 50000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
+            score += 50000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
             score += 500 * (countPattern("XXbbXX", line) + countPattern("bbXXX", line) +  countPattern("XXXbb", line)); // two in a row  
             score += 100 * (countPattern("XXbXX", line)  + countPattern("bXXXX", line) + countPattern("XXXXb", line)); //ones                                                                                                                  //the two
         }
 
         if(AIPiece == 'b' && isMaximizingPlayer || AIPiece == 'w' && !isMaximizingPlayer){
-            //cout<< "White score"<< endl;
-            score += 1000000 * (countPattern("wwwww", line)); //win
-            score += 500000 * (countPattern("XwwwwX", line)); //the straight four
-            score += 50000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
-            score += 5000 * (countPattern("XwwwX", line)); //the three in a row
+           //cout<< "White score"<< endl;
+            score += 1000000000 * (countPattern("wwwww", line)); //win
+            score += 500000000 * (countPattern("XwwwwX", line)); //the straight four
+            score += 5000000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
+            score += 50000 * (countPattern("XwwwX", line)); //the three in a row
             score += 5000 * (countPattern("XwXwwX", line) + countPattern("XwwXwX", line)) ; //the broken three  
             score += 500 * (countPattern("XXwwXX", line) + countPattern("wwXXX", line) +  countPattern("XXXww", line)); // two in a row  
             score += 100 * (countPattern("XXwXX", line)  + countPattern("wXXXX", line) + countPattern("XXXXw", line)); //ones   
@@ -204,21 +204,21 @@ double gobang::diagonal(state* s, bool isMaximizingPlayer){
         if (AIPiece == 'w' && isMaximizingPlayer || AIPiece == 'b' && !isMaximizingPlayer)
         {
             //cout<< "black score"<< endl;
-            score += 1000000 * (countPattern("bbbbb", line));
-            score += 500000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
-            score += 50000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
-            score += 5000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
-            score += 5000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
+            score += 1000000000 * (countPattern("bbbbb", line));
+            score += 500000000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
+            score += 5000000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
+            score += 50000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
+            score += 50000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
             score += 500 * (countPattern("XXbbXX", line) + countPattern("bbXXX", line) +  countPattern("XXXbb", line)); // two in a row  
             score += 100 * (countPattern("XXbXX", line)  + countPattern("bXXXX", line) + countPattern("XXXXb", line)); //ones                                                                                                                  //the two
         }
 
         if(AIPiece == 'b' && isMaximizingPlayer || AIPiece == 'w' && !isMaximizingPlayer){
            //cout<< "White score"<< endl;
-            score += 1000000 * (countPattern("wwwww", line)); //win
-            score += 500000 * (countPattern("XwwwwX", line)); //the straight four
-            score += 50000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
-            score += 5000 * (countPattern("XwwwX", line)); //the three in a row
+            score += 1000000000 * (countPattern("wwwww", line)); //win
+            score += 500000000 * (countPattern("XwwwwX", line)); //the straight four
+            score += 5000000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
+            score += 50000 * (countPattern("XwwwX", line)); //the three in a row
             score += 5000 * (countPattern("XwXwwX", line) + countPattern("XwwXwX", line)) ; //the broken three  
             score += 500 * (countPattern("XXwwXX", line) + countPattern("wwXXX", line) +  countPattern("XXXww", line)); // two in a row  
             score += 100 * (countPattern("XXwXX", line)  + countPattern("wXXXX", line) + countPattern("XXXXw", line)); //ones   
@@ -246,9 +246,9 @@ double gobang::evalFunc(state* s, int depth, bool isMaximizingPlayer){
 }
 
 string gobang::AIOptimalMove(state* s){
-    double alpha = -1000000000000;
-    double beta = 1000000000000;
-    double max = -1000000000000;
+    double alpha = -1000000000000000;
+    double beta = 1000000000000000;
+    double max = -1000000000000000;
     string s1 = "";
     char col;
     int row;
@@ -283,7 +283,7 @@ double gobang::minmax(state* s, int depth, bool isMaximizingPlayer, double & alp
     if(gameEnds(s)) return pointForCurrentState;
 
     if(isMaximizingPlayer){
-        double MaxValue = -1000000000000;
+        double MaxValue = -1000000000000000;
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
                 if(s->board[i][j] == 'X' && hasPiecesNearThem(s, i, j)){
@@ -297,7 +297,7 @@ double gobang::minmax(state* s, int depth, bool isMaximizingPlayer, double & alp
         }
         return MaxValue;
     } else{
-        double MinValue = 1000000000000;
+        double MinValue = 1000000000000000;
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
                 if(s->board[i][j] == 'X' && hasPiecesNearThem(s, i, j)){
