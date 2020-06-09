@@ -2,7 +2,7 @@
 #include <string>
 #include "gobang.h"
 #include <cmath>
-
+#include<time.h>
 using namespace std;
 bool gobang::gameEnds(state* s){
     for(int i = 0; i < boardSize; i++){
@@ -117,188 +117,199 @@ int gobang::countPattern(string pattern, string line){
     return count;
 }
 
-int gobang::horizantal(state* s, bool isAITurn){
-    int score = 1;
-    int score2 = 1;
+double gobang::horizantal(state* s, bool isMaximizingPlayer){
+    double score = 0;
     for(int i = 0; i < boardSize; i++){
         string line = s->board[i];
-        score += 100000 * (countPattern("XbbbbX", line)); //the straight four
-        score += 50000 * (countPattern("bbbbX", line) + countPattern("bbbXb", line) + countPattern("bbXbb", line) + countPattern("bXbbb", line) + countPattern("Xbbbb", line)); //the four
-        score += 1000* (countPattern("XbbbX", line)); //the three
-        score += 5000 * (countPattern("XbXbbX", line)); //the broken three  
-        score += 200 * countPattern("XbbX", line); //the two
+        if (AIPiece == 'w' && isMaximizingPlayer || AIPiece == 'b' && !isMaximizingPlayer)
+        {
+           // cout<< "black score"<< endl;
+            score += 1000000 * (countPattern("bbbbb", line));
+            score += 500000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
+            score += 50000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
+            score += 5000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
+            score += 5000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
+            score += 500 * (countPattern("XXbbXX", line) + countPattern("bbXXX", line) +  countPattern("XXXbb", line)); // two in a row  
+            score += 100 * (countPattern("XXbXX", line)  + countPattern("bXXXX", line) + countPattern("XXXXb", line)); //ones                                                                                                                  //the two
+        }
 
-        score2 += 100000 * (countPattern("XwwwwX", line)); //the straight four
-        score2 += 50000 * (countPattern("wwwwX", line) + countPattern("wwwXw", line) + countPattern("wwXww", line) + countPattern("wXwww", line) + countPattern("Xwwww", line)); //the four
-        score2 += 1000 * (countPattern("XwwwX", line)); //the three
-        score2 += 5000 * (countPattern("XwXwwX", line)); //the wroken three
-        score2 +=  200 * countPattern("XwwX", line); //the two
+        if(AIPiece == 'b' && isMaximizingPlayer || AIPiece == 'w' && !isMaximizingPlayer){
+           // cout<< "White score"<< endl;
+            score += 1000000 * (countPattern("wwwww", line)); //win
+            score += 500000 * (countPattern("XwwwwX", line)); //the straight four
+            score += 50000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
+            score += 5000 * (countPattern("XwwwX", line)); //the three in a row
+            score += 5000 * (countPattern("XwXwwX", line) + countPattern("XwwXwX", line)) ; //the broken three  
+            score += 500 * (countPattern("XXwwXX", line) + countPattern("wwXXX", line) +  countPattern("XXXww", line)); // two in a row  
+            score += 100 * (countPattern("XXwXX", line)  + countPattern("wXXXX", line) + countPattern("XXXXw", line)); //ones   
+        }
     }
-    /*
-    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
-    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
-    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
-    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
-    */
-   if(AIPiece == 'b') return score - score2;
-   return score2- score;
+    return score; 
 }
 
-int gobang::vertical(state* s, bool isAITurn){
-    int score = 1;
-    int score2 = 1;
+double gobang::vertical(state* s, bool isMaximizingPlayer){
+    double score = 0;
     for(int i = 0; i < boardSize; i++){
         string line = "";
         for(int j = 0; j < boardSize; j++){
              line += s->board[j][i];
         }
-        score += 100000 * (countPattern("XbbbbX", line)); //the straight four
-        score += 50000 * (countPattern("bbbbX", line) + countPattern("bbbXb", line) + countPattern("bbXbb", line) + countPattern("bXbbb", line) + countPattern("Xbbbb", line)); //the four
-        score += 1000 * (countPattern("XbbbX", line)); //the three
-        score += 5000 * countPattern("XbXbbX", line); //the broken three  
-        score +=  200 * countPattern("XbbX", line); //the two
+        if (AIPiece == 'w' && isMaximizingPlayer || AIPiece == 'b' && !isMaximizingPlayer)
+        {
+           // cout<< "black score"<< endl;
+            score += 1000000 * (countPattern("bbbbb", line));
+            score += 500000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
+            score += 50000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
+            score += 5000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
+            score += 5000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
+            score += 500 * (countPattern("XXbbXX", line) + countPattern("bbXXX", line) +  countPattern("XXXbb", line)); // two in a row  
+            score += 100 * (countPattern("XXbXX", line)  + countPattern("bXXXX", line) + countPattern("XXXXb", line)); //ones                                                                                                                  //the two
+        }
 
-        score2 += 100000 * (countPattern("XwwwwX", line)); //the straight four
-        score2 += 50000 * (countPattern("wwwwX", line) + countPattern("wwwXw", line) + countPattern("wwXww", line) + countPattern("wXwww", line) + countPattern("Xwwww", line)); //the four
-        score2 += 1000 * (countPattern("XwwwX", line)); //the three
-        score2 += 5000 * countPattern("XwXwwX", line); //the wroken three  
-        score2 +=  200 * countPattern("XwwX", line); //the two
+        if(AIPiece == 'b' && isMaximizingPlayer || AIPiece == 'w' && !isMaximizingPlayer){
+            //cout<< "White score"<< endl;
+            score += 1000000 * (countPattern("wwwww", line)); //win
+            score += 500000 * (countPattern("XwwwwX", line)); //the straight four
+            score += 50000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
+            score += 5000 * (countPattern("XwwwX", line)); //the three in a row
+            score += 5000 * (countPattern("XwXwwX", line) + countPattern("XwwXwX", line)) ; //the broken three  
+            score += 500 * (countPattern("XXwwXX", line) + countPattern("wwXXX", line) +  countPattern("XXXww", line)); // two in a row  
+            score += 100 * (countPattern("XXwXX", line)  + countPattern("wXXXX", line) + countPattern("XXXXw", line)); //ones   
+        }
     }
-    /*
-    if(AIPiece == 'b'&& isAITurn) return 2* score - score2;
-    if(AIPiece == 'b'&& !isAITurn) return score - 2*score2;
-    if(AIPiece == 'w'&& isAITurn) return 2*score2 - score;
-    if(AIPiece == 'w'&& !isAITurn) return score2 - 2*score;
-    */
-    if(AIPiece == 'b') return score - score2;
-    return score2- score;
+    return score; 
 }
 
-int gobang::diagonal(state* s, bool isAITurn){
-    int score = 1;
-    int score2 = 1;
+double gobang::diagonal(state* s, bool isMaximizingPlayer){
+    double score = 0;
+
     //right diag
     for(int i = 0; i < boardSize; i++){
-        string line = "", line2 = "", line3 = "", line4 = "";
+        string line1 = "", line2 = "", line3 = "", line4 = "";
         int diagTmp = i;
         for(int j = 0; j < boardSize; j++){
             if (diagTmp >= boardSize) break;
-            line += s->board[j][diagTmp];
+            line1 += s->board[j][diagTmp];
             line2 += s->board[diagTmp][j];
-            
-            //cout<< j<< " " << diagTmp<< endl;
             line3 += s->board[diagTmp][boardSize-j-1];
             line4 += s->board[diagTmp-i][boardSize-j-i-1];
             diagTmp++;
         }
 
-        if(line.size() == line2.size() && line.size() == boardSize) line2 = "";
-        if(line3.size() == line4.size() && line.size() == boardSize) line4 = "";
-        if(line.size() < 5) continue;
-
+        if(line1.size() == line2.size() && line1.size() == boardSize) line2 = "";
+        if(line3.size() == line4.size() && line1.size() == boardSize) line4 = "";
+        
+        string line = line1 + "-" + line2 + "-" + line3 + "-" + line4;
     
+        if (AIPiece == 'w' && isMaximizingPlayer || AIPiece == 'b' && !isMaximizingPlayer)
+        {
+            //cout<< "black score"<< endl;
+            score += 1000000 * (countPattern("bbbbb", line));
+            score += 500000 * (countPattern("XbbbbX", line)); //the straight four                                                                                                                    //the straight four
+            score += 50000 * (countPattern("Xbbbbw", line) + countPattern("wbbbbX", line)); //the four in a row
+            score += 5000 * (countPattern("XbbbX", line));  // the three in a row                                                                                                               //the three
+            score += 5000 * (countPattern("XbbXbX", line) + countPattern("XbXbbX", line));   // the broken three                                                                                                            //the broken three
+            score += 500 * (countPattern("XXbbXX", line) + countPattern("bbXXX", line) +  countPattern("XXXbb", line)); // two in a row  
+            score += 100 * (countPattern("XXbXX", line)  + countPattern("bXXXX", line) + countPattern("XXXXb", line)); //ones                                                                                                                  //the two
+        }
 
-        score += 100000 * (countPattern("XbbbbX", line) + countPattern("XbbbbX", line2)
-                            +countPattern("XbbbbX", line3) + countPattern("XbbbbX", line4)); //the straight four
-        score += 50000 * (countPattern("bbbbX", line) + countPattern("bbbXb", line) + countPattern("bbXbb", line) + countPattern("bXbbb", line) + countPattern("Xbbbb", line)
-                        + countPattern("bbbbX", line2) + countPattern("bbbXb", line2) + countPattern("bbXbb", line2) + countPattern("bXbbb", line2) + countPattern("Xbbbb", line2)
-                        + countPattern("bbbbX", line3) + countPattern("bbbXb", line3) + countPattern("bbXbb", line3) + countPattern("bXbbb", line3) + countPattern("Xbbbb", line3)
-                        + countPattern("bbbbX", line4) + countPattern("bbbXb", line4) + countPattern("bbXbb", line4) + countPattern("bXbbb", line4) + countPattern("Xbbbb", line4)); //the four
-        score += 1000 * (countPattern("XbbbX", line) + countPattern("XbbbX", line2)
-                        + countPattern("XbbbX", line3) + countPattern("XbbbX", line4)); //the three
-        score += 5000 * (countPattern("XbXbbX", line) + countPattern("XbXbbX", line2)
-                         +countPattern("XbXbbX", line3) + countPattern("XbXbbX", line4)); //the broken three  
-        score +=  200 * (countPattern("XbbX", line) + countPattern("XbbX", line2) + countPattern("XbbX", line3) + countPattern("XbbX", line4) ); //the two
-
-        score2 += 100000 * (countPattern("XwwwwX", line) + countPattern("XwwwwX", line2)
-                            +countPattern("XwwwwX", line3) + countPattern("XwwwwX", line4)); //the straight four
-        score2 += 50000 * (countPattern("wwwwX", line) + countPattern("wwwXw", line) + countPattern("wwXww", line) + countPattern("wXwww", line) + countPattern("Xwwww", line)
-                        + countPattern("wwwwX", line2) + countPattern("wwwXw", line2) + countPattern("wwXww", line2) + countPattern("wXwww", line2) + countPattern("Xwwww", line2)
-                        + countPattern("wwwwX", line3) + countPattern("wwwXw", line3) + countPattern("wwXww", line3) + countPattern("wXwww", line3) + countPattern("Xwwww", line3)
-                        + countPattern("wwwwX", line4) + countPattern("wwwXw", line4) + countPattern("wwXww", line4) + countPattern("wXwww", line4) + countPattern("Xwwww", line4)); //the four
-        score2 += 1000 * (countPattern("XwwwX", line) + countPattern("XwwwX", line2)
-                        + countPattern("XwwwX", line3) + countPattern("XwwwX", line4)); //the three
-        score2 += 5000 * (countPattern("XwXwwX", line) + countPattern("XwXwwX", line2)
-                         +countPattern("XwXwwX", line3) + countPattern("XwXwwX", line4)); //the wroken three  
-        score2 +=  200 * (countPattern("XwwX", line) + countPattern("XwwX", line2) + countPattern("XwwX", line3) + countPattern("XwwX", line4) );
-
-
+        if(AIPiece == 'b' && isMaximizingPlayer || AIPiece == 'w' && !isMaximizingPlayer){
+           //cout<< "White score"<< endl;
+            score += 1000000 * (countPattern("wwwww", line)); //win
+            score += 500000 * (countPattern("XwwwwX", line)); //the straight four
+            score += 50000 * (countPattern("Xwwwwb", line) + countPattern("bwwwwX", line)); //the four in a row
+            score += 5000 * (countPattern("XwwwX", line)); //the three in a row
+            score += 5000 * (countPattern("XwXwwX", line) + countPattern("XwwXwX", line)) ; //the broken three  
+            score += 500 * (countPattern("XXwwXX", line) + countPattern("wwXXX", line) +  countPattern("XXXww", line)); // two in a row  
+            score += 100 * (countPattern("XXwXX", line)  + countPattern("wXXXX", line) + countPattern("XXXXw", line)); //ones   
+        }
     }
-    if(AIPiece == 'b') return score - score2;
-    return score2- score;
+    return score; 
 }
 
-int gobang::evalFunc(state* s, int depth, bool isAIturn){
-    char** tmp = s->board;
-    int score = 0;
-    if(gameEnds(s)){
-        return 100000000;
+bool gobang::hasPiecesNearThem(state* s, int row, int col){
+    for(int i = -2; i <= 2; i++){
+        for(int j = -2; j <= 2; j++){
+            if(row+i < boardSize && row+i >= 0 && col+j < boardSize && col+j >=0){
+                if(s->board[row+i][col+j] != 'X') return true;
+            }
+        }
     }
-    score = diagonal(s, isAIturn) + vertical(s, isAIturn) + horizantal(s, isAIturn);
-    score = score - depth;
-    if(isAIturn) return score;
-    return score * -1;
+    return false;
+}
+
+double gobang::evalFunc(state* s, int depth, bool isMaximizingPlayer){
+    int score = 0;
+    score = diagonal(s, isMaximizingPlayer) + vertical(s, isMaximizingPlayer) + horizantal(s, isMaximizingPlayer);
+    if(isMaximizingPlayer) return -score;
+    return score;
 }
 
 string gobang::AIOptimalMove(state* s){
-    int MaxValue = -100000000;
+    double alpha = -1000000000000;
+    double beta = 1000000000000;
+    double max = -1000000000000;
     string s1 = "";
     char col;
     int row;
     for (int i = 0; i < boardSize; i++){
         for (int j = 0; j < boardSize; j++){
-            if(s->board[i][j] == 'X'){
+            if(s->board[i][j] == 'X' && hasPiecesNearThem(s, i, j)){
                 s->board[i][j] = AIPiece;
-                int tmp = minmax(s, 1,false);
-                if(tmp >= MaxValue){
+                double evaluated = minmax(s, 1, false, alpha, beta);
+                //cout<< i << " " << j << " Evaluated: " << evaluated << endl;
+                if(evaluated > max){
                     col = 'a' + j;
                     row = i+1;
-                    MaxValue = tmp;
+                    max = evaluated;
                 }
                 s->board[i][j] = 'X';
             }
         }
     }
+    cout<< col << " " << row << endl;
     s1 += col;
     s1 += to_string(row);
     return s1;
 }
 
-int gobang::minmax(state* s, int depth, bool isAIturn){
+double gobang::minmax(state* s, int depth, bool isMaximizingPlayer, double & alpha, double & beta){
     if (isTie(s)) return 0;
-    int pointForCurrentState = evalFunc(s, depth, isAIturn);
-    //cout<< "Eval for current state: " << pointForCurrentState<<endl;
-    //printBoard();
+    double pointForCurrentState = evalFunc(s, depth, isMaximizingPlayer);
     if (depth == this->depth)
         {
-        //    cout << "Exited bitch " <<endl;
             return pointForCurrentState;
         }
-    if (abs(pointForCurrentState) == 100000000) return pointForCurrentState;
-    if(isAIturn){
-        int MaxValue = -100000000;
+    if(gameEnds(s)) return pointForCurrentState;
+
+    if(isMaximizingPlayer){
+        double MaxValue = -1000000000000;
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
-                if(s->board[i][j] == 'X'){
+                if(s->board[i][j] == 'X' && hasPiecesNearThem(s, i, j)){
                     s->board[i][j] = AIPiece;
-                    MaxValue = max(MaxValue, minmax(s, depth+1, !isAIturn));
+                    MaxValue = max(MaxValue, minmax(s, depth+1, !isMaximizingPlayer, alpha, beta));
                     s->board[i][j] = 'X';
+                    alpha = max(alpha, MaxValue);
+                    if (alpha >= beta) break;
                 }
             }
         }
         return MaxValue;
     } else{
-        int MaxValue = 100000000;
+        double MinValue = 1000000000000;
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
-                if(s->board[i][j] == 'X'){
+                if(s->board[i][j] == 'X' && hasPiecesNearThem(s, i, j)){
                     s->board[i][j] = HumanPiece;
-                    MaxValue = min(MaxValue, minmax(s,depth +1, !isAIturn));
+                    MinValue = min(MinValue, minmax(s,depth+1, !isMaximizingPlayer, alpha, beta));
                     s->board[i][j] = 'X';
+                    beta = min(beta, MinValue);
+                    if (alpha >= beta) break;
                 }
             }
         }
-        return MaxValue;
+        return MinValue;
     }
 }
 
@@ -307,20 +318,27 @@ int gobang::minmax(state* s, int depth, bool isAIturn){
 
 void gobang::startGame()
 {
-    if(AIPiece == 'b'){
-        string move = AIOptimalMove(&currentState);
-        int col = move[0] - 'a';
-        int row = stoi(move.substr(1));
-        row--;
-       // cout<< col << " " << row<< endl;
+    if (AIPiece == 'b'){
+        string move = "";
+        int row; 
+        int col; 
+        //random first move for the AI
+        srand(time(0));
+        row = rand() % boardSize;
+        col = rand() % boardSize;
+
         currentState.board[row][col] = AIPiece;
+        char column = 'a' + col;
+        char roww = '1' + row;
+        move += column;
+        move += roww; 
         cout<< "Move played: " << move << endl;
-       // printBoard();
+      
     }
 
     while(true){
         HumanTurn();
-        printBoard();
+       //printBoard();
         string move = AIOptimalMove(&currentState);
         int col = move[0] - 'a';
         int row = stoi(move.substr(1));
@@ -328,7 +346,7 @@ void gobang::startGame()
         //cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
-        printBoard();
+        //printBoard();
     }
 }
 

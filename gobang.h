@@ -1,6 +1,6 @@
 struct state
 {
-        char **board;
+    char **board;
 };
 
 class gobang
@@ -12,17 +12,17 @@ private:
     char HumanPiece;
     int depth;
     void HumanTurn();
-    int horizantal(state*,bool);
-    int vertical(state*, bool);
-    int diagonal(state*, bool);
+    double horizantal(state*,bool);
+    double vertical(state*, bool);
+    double diagonal(state*, bool);
     int countPattern(std::string, std::string);
-    
+    bool hasPiecesNearThem(state*,int,int);
     
 public:
     gobang(int boardSize, char AIPiece);
     bool isTie(state*);
-    int evalFunc(state*, int, bool);
-    int minmax(state*, int, bool);
+    double evalFunc(state*, int, bool);
+    double minmax(state*, int, bool, double&, double&);
     std::string AIOptimalMove(state*);
     void startGame();
     bool gameEnds(state*);
