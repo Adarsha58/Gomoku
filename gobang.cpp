@@ -73,7 +73,7 @@ gobang::gobang(int boardSize, char AIPiece)
     //initilazies the boardSize and currentBoard
     this->boardSize = boardSize;
     this->AIPiece = AIPiece;
-    depth = 4;
+    depth = 2;
     this->HumanPiece = ('b' == AIPiece) ? 'w':'b';
     currentState.board = new char *[boardSize];
     for (int i = 0; i < boardSize; ++i)
@@ -257,7 +257,7 @@ string gobang::AIOptimalMove(state* s){
             if(s->board[i][j] == 'X' && hasPiecesNearThem(s, i, j)){
                 s->board[i][j] = AIPiece;
                 double evaluated = minmax(s, 1, false, alpha, beta);
-                cout<< i << " " << j << " Evaluated: " << evaluated << endl;
+                //cout<< i << " " << j << " Evaluated: " << evaluated << endl;
                 if(evaluated > max){
                     col = 'a' + j;
                     row = i+1;
