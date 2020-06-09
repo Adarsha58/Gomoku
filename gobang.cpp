@@ -2,7 +2,7 @@
 #include <string>
 #include "gobang.h"
 #include <cmath>
-
+#include<time.h>
 using namespace std;
 bool gobang::gameEnds(state* s){
     for(int i = 0; i < boardSize; i++){
@@ -318,20 +318,27 @@ double gobang::minmax(state* s, int depth, bool isMaximizingPlayer, double & alp
 
 void gobang::startGame()
 {
-    if(AIPiece == 'b'){
-        string move = AIOptimalMove(&currentState);
-        int col = move[0] - 'a';
-        int row = stoi(move.substr(1));
-        row--;
-       // cout<< col << " " << row<< endl;
+    if (AIPiece == 'b'){
+        string move = "";
+        int row; 
+        int col; 
+        //random first move for the AI
+        srand(time(0));
+        row = rand() % boardSize;
+        col = rand() % boardSize;
+
         currentState.board[row][col] = AIPiece;
+        char column = 'a' + col;
+        char roww = '1' + row;
+        move += column;
+        move += roww; 
         cout<< "Move played: " << move << endl;
-       // printBoard();
+      
     }
 
     while(true){
         HumanTurn();
-        printBoard();
+       //printBoard();
         string move = AIOptimalMove(&currentState);
         int col = move[0] - 'a';
         int row = stoi(move.substr(1));
@@ -339,7 +346,7 @@ void gobang::startGame()
         //cout<< col << " " << row<< endl;
         currentState.board[row][col] = AIPiece;
         cout<< "Move played: " << move << endl;
-        printBoard();
+        //printBoard();
     }
 }
 
